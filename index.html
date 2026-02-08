@@ -2,47 +2,125 @@
 <html>
 <head>
 <title>My Valentine</title>
+
 <style>
 body{
-  text-align:center;
+  margin:0;
+  height:100vh;
+  overflow:hidden;
   font-family:Arial;
-  background:linear-gradient(to right,#ff758c,#ff7eb3);
+  text-align:center;
   color:white;
+  background:linear-gradient(45deg,#ff4e50,#ff99ac);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* typing text */
+#text{
+  font-size:34px;
+  margin:20px;
+  border-right:3px solid white;
+  white-space:nowrap;
   overflow:hidden;
 }
-h1{
-  margin-top:100px;
-  font-size:40px;
-}
+
+/* buttons */
 button{
-  padding:10px 20px;
+  padding:12px 25px;
   font-size:18px;
-  margin:20px;
+  margin:15px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   cursor:pointer;
 }
+
 #yes{background:green;color:white;}
 #no{background:red;color:white;position:absolute;}
-</style>
-</head>
-<body>
 
-<h1>Will you be my Valentine? ❤️</h1>
-
-<button id="yes" onclick="yesClick()">Yes 💖</button>
-<button id="no" onmouseover="moveNo()">No 😜</button>
-
-<script>
-function yesClick(){
-  document.body.innerHTML="<h1>Yayyyy ❤️ I love you 😍</h1>";
+/* falling hearts */
+.heart{
+  position:absolute;
+  top:-10px;
+  animation:fall linear infinite;
 }
 
+@keyframes fall{
+  to{ transform:translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="text"></h1>
+
+<button id="yes" onclick="yesClick()" style="display:none;">Yes 💖</button>
+<button id="no" onmouseover="moveNo()" style="display:none;">No 😜</button>
+
+<!-- music -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* typing message */
+let message="Sumiya ❤️ tum meri life ka sabse khoobsurat hissa ho. Main tumhe kabhi khona nahi chahta. Kya tum meri banogi?";
+let i=0;
+
+function typing(){
+  if(i<message.length){
+    document.getElementById("text").innerHTML+=message.charAt(i);
+    i++;
+    setTimeout(typing,60);
+  }else{
+    document.getElementById("yes").style.display="inline-block";
+    document.getElementById("no").style.display="inline-block";
+  }
+}
+typing();
+
+/* move no */
 function moveNo(){
   let x=Math.random()*window.innerWidth;
   let y=Math.random()*window.innerHeight;
-  document.getElementById('no').style.left=x+'px';
-  document.getElementById('no').style.top=y+'px';
+  document.getElementById("no").style.left=x+"px";
+  document.getElementById("no").style.top=y+"px";
+}
+
+/* hearts background */
+setInterval(()=>{
+  let heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  heart.style.animationDuration=(Math.random()*3+2)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+},300);
+
+/* YES celebration */
+function yesClick(){
+  document.body.innerHTML = `
+  <h1 style="margin-top:20%;font-size:40px;">
+  Thank you Sumiya ❤️ ab future, dreams, life sab tumhare naam. Forever together 💍
+  </h1>
+  `;
+
+  setInterval(()=>{
+    let heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.style.position="absolute";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.top="-10px";
+    heart.style.fontSize=(Math.random()*20+20)+"px";
+    heart.style.animation="fall 3s linear";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),3000);
+  },200);
 }
 </script>
 
