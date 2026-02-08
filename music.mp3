@@ -3,31 +3,43 @@
 <head>
 <title>My Valentine</title>
 
+<!-- romantic font -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
   height:100vh;
   overflow:hidden;
-  font-family:Arial;
+  font-family:'Dancing Script',cursive;
   text-align:center;
   color:white;
-  background:linear-gradient(45deg,#ff4e50,#ff99ac);
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
+
+  /* background image */
+  background:url("bg.jpg") no-repeat center center/cover;
 }
 
-/* typing text */
+/* dark effect */
+body::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:-1;
+}
+
 #text{
-  font-size:34px;
+  font-size:38px;
   margin:20px;
-  border-right:3px solid white;
-  white-space:nowrap;
-  overflow:hidden;
 }
 
-/* buttons */
 button{
   padding:12px 25px;
   font-size:18px;
@@ -37,10 +49,9 @@ button{
   cursor:pointer;
 }
 
-#yes{background:green;color:white;}
-#no{background:red;color:white;position:absolute;}
+#yes{background:#00c853;color:white;}
+#no{background:#d50000;color:white;position:absolute;}
 
-/* falling hearts */
 .heart{
   position:absolute;
   top:-10px;
@@ -60,13 +71,17 @@ button{
 <button id="yes" onclick="yesClick()" style="display:none;">Yes 💖</button>
 <button id="no" onmouseover="moveNo()" style="display:none;">No 😜</button>
 
-<!-- music -->
-<audio autoplay loop>
+<audio id="song" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* typing message */
+// try autoplay
+window.onload=function(){
+  document.getElementById("song").play().catch(()=>{});
+}
+
+/* typing */
 let message="Sumiya ❤️ tum meri life ka sabse khoobsurat hissa ho. Main tumhe kabhi khona nahi chahta. Kya tum meri banogi?";
 let i=0;
 
@@ -90,7 +105,7 @@ function moveNo(){
   document.getElementById("no").style.top=y+"px";
 }
 
-/* hearts background */
+/* hearts */
 setInterval(()=>{
   let heart=document.createElement("div");
   heart.className="heart";
@@ -102,25 +117,13 @@ setInterval(()=>{
   setTimeout(()=>heart.remove(),5000);
 },300);
 
-/* YES celebration */
+/* yes */
 function yesClick(){
   document.body.innerHTML = `
-  <h1 style="margin-top:20%;font-size:40px;">
-  Thank you Sumiya ❤️ ab future, dreams, life sab tumhare naam. Forever together 💍
+  <h1 style="margin-top:20%;font-size:42px;">
+  Thank you Sumiya ❤️ ab future, dreams, life sab tumhare naam 💍
   </h1>
   `;
-
-  setInterval(()=>{
-    let heart=document.createElement("div");
-    heart.innerHTML="💖";
-    heart.style.position="absolute";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.top="-10px";
-    heart.style.fontSize=(Math.random()*20+20)+"px";
-    heart.style.animation="fall 3s linear";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),3000);
-  },200);
 }
 </script>
 
