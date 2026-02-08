@@ -3,55 +3,62 @@
 <head>
 <title>My Valentine</title>
 
-<!-- romantic font -->
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<!-- premium fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
   height:100vh;
   overflow:hidden;
-  font-family:'Dancing Script',cursive;
+  font-family:'Poppins',sans-serif;
   text-align:center;
   color:white;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-
-  /* background image */
-  background:url("bg.jpg") no-repeat center center/cover;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
 
-/* dark effect */
-body::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  z-index:-1;
-}
-
+/* main romantic text */
 #text{
-  font-size:38px;
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
   margin:20px;
+  text-shadow:0 0 15px rgba(255,255,255,0.8);
 }
 
+/* buttons */
 button{
   padding:12px 25px;
-  font-size:18px;
-  margin:15px;
-  border:none;
-  border-radius:12px;
+  font-size:16px;
+  margin:10px;
+  border-radius:30px;
   cursor:pointer;
+  border:1px solid rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(5px);
+  color:white;
+  transition:0.3s;
 }
 
-#yes{background:#00c853;color:white;}
-#no{background:#d50000;color:white;position:absolute;}
+button:hover{
+  transform:scale(1.1);
+  background:rgba(255,255,255,0.3);
+}
 
+#no{
+  position:absolute;
+}
+
+/* play button special */
+.playbtn{
+  background:#ff4081;
+  border:none;
+}
+
+/* hearts */
 .heart{
   position:absolute;
   top:-10px;
@@ -71,17 +78,13 @@ button{
 <button id="yes" onclick="yesClick()" style="display:none;">Yes 💖</button>
 <button id="no" onmouseover="moveNo()" style="display:none;">No 😜</button>
 
+<button class="playbtn" onclick="document.getElementById('song').play()">🎵 Play Music</button>
+
 <audio id="song" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// try autoplay
-window.onload=function(){
-  document.getElementById("song").play().catch(()=>{});
-}
-
-/* typing */
 let message="Sumiya ❤️ tum meri life ka sabse khoobsurat hissa ho. Main tumhe kabhi khona nahi chahta. Kya tum meri banogi?";
 let i=0;
 
@@ -97,7 +100,6 @@ function typing(){
 }
 typing();
 
-/* move no */
 function moveNo(){
   let x=Math.random()*window.innerWidth;
   let y=Math.random()*window.innerHeight;
@@ -105,11 +107,11 @@ function moveNo(){
   document.getElementById("no").style.top=y+"px";
 }
 
-/* hearts */
+/* falling hearts */
 setInterval(()=>{
   let heart=document.createElement("div");
   heart.className="heart";
-  heart.innerHTML="❤️";
+  heart.innerHTML="💖";
   heart.style.left=Math.random()*100+"vw";
   heart.style.fontSize=(Math.random()*20+15)+"px";
   heart.style.animationDuration=(Math.random()*3+2)+"s";
@@ -117,11 +119,10 @@ setInterval(()=>{
   setTimeout(()=>heart.remove(),5000);
 },300);
 
-/* yes */
 function yesClick(){
   document.body.innerHTML = `
-  <h1 style="margin-top:20%;font-size:42px;">
-  Thank you Sumiya ❤️ ab future, dreams, life sab tumhare naam 💍
+  <h1 style="margin-top:20%;font-family:'Great Vibes';font-size:48px;">
+  Thank you Sumiya ❤️ Forever Together 💍
   </h1>
   `;
 }
